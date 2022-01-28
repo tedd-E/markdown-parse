@@ -18,4 +18,20 @@ public class MarkdownParseTest {
         assertEquals("Test the links of test-file.md", List.of("https://something.com", "some-page.html"), links);
 
     }
+
+    @Test
+    public void testLinkFirst() throws IOException {
+        Path filename = Path.of("linkfirst.md");
+        String contents = Files.readString(filename);
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        assertEquals("Test the links of link-first.md", List.of("[link](hee.com)"), links);
+    }
+
+    @Test
+    public void testNoParen() throws IOException {
+        Path filename = Path.of("no-paren.md");
+        String contents = Files.readString(filename);
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        assertEquals("Test the links of no-paren.md", List.of("[link]google.com"), links);
+    }
 }
