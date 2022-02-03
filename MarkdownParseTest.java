@@ -1,37 +1,43 @@
 import static org.junit.Assert.*;
 import org.junit.*;
-import java.io.*;
-import java.nio.file.*;
-import java.util.*;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MarkdownParseTest {
     @Test
     public void addition() {
         assertEquals(2, 1 + 1);
     }
-
     @Test
     public void testNewFile() throws IOException {
-        Path filename = Path.of("test-file.md");
-        String contents = Files.readString(filename);
+        Path fileName = Path.of("test-file.md");
+	    String contents = Files.readString(fileName);
         ArrayList<String> links = MarkdownParse.getLinks(contents);
-        assertEquals("Test the links of test-file.md", List.of("https://something.com", "some-page.html"), links);
-
+        assertEquals("Test the links from test-file.md", List.of("https://something.com", "some-page.html"), links);
     }
-
     @Test
-    public void testLinkFirst() throws IOException {
-        Path filename = Path.of("linkfirst.md");
-        String contents = Files.readString(filename);
+    public void testImageFile() throws IOException {
+        Path fileName = Path.of("new-file.md");
+	    String contents = Files.readString(fileName);
         ArrayList<String> links = MarkdownParse.getLinks(contents);
-        assertEquals("Test the links of link-first.md", List.of("[link](hee.com)"), links);
+        assertEquals("Test links from new-file.md", List.of("google.com"), links);
     }
-
     @Test
     public void testNoParen() throws IOException {
-        Path filename = Path.of("no-paren.md");
-        String contents = Files.readString(filename);
+        Path fileName = Path.of("no-paren.md");
+	    String contents = Files.readString(fileName);
         ArrayList<String> links = MarkdownParse.getLinks(contents);
-        assertEquals("Test the links of no-paren.md", List.of("[link]google.com"), links);
+        assertEquals("Test links from no-paren.md", List.of(), links);
+    }
+    @Test
+    public void testLinkFirst() throws IOException {
+        Path fileName = Path.of("link-first.md");
+	    String contents = Files.readString(fileName);
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        assertEquals("Test links from link-first.md", List.of("firstline.com"), links);
     }
 }
