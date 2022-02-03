@@ -10,7 +10,7 @@ import java.util.List;
 public class MarkdownParseTest {
     @Test
     public void addition() {
-        assertNotEquals(2, 1 + 1);
+        assertEquals(2, 1 + 1);
     }
     @Test
     public void testNewFile() throws IOException {
