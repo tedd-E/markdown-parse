@@ -47,4 +47,11 @@ public class MarkdownParseTest {
         ArrayList<String> links = MarkdownParse.getLinks(contents);
         assertEquals("Test links from testformat2.md", List.of(), links);
     }
+    @Test
+    public void testVim() throws IOException {
+	Path fileName = Path.of("testformat2.md");
+	String contents = Files.readString(fileName);
+	ArrayList<String> links = MarkdownParse.getLinks(contents);
+	assertEquals("Test links from testformat2.md (vim version)", List.of(), links);
+    }
 }

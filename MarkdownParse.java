@@ -13,20 +13,22 @@ public class MarkdownParse {
         int currentIndex = 0;
         while(currentIndex < markdown.length()) {
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
-            if(nextOpenBracket == -1) {
-                break;
-            }
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
             int openParen = markdown.indexOf("(", nextCloseBracket);
-            if(openParen == -1) {
+            /* if(openParen == -1) {
                 currentIndex = nextCloseBracket + 1; //continue to look for bracket after next close bracket
                 continue;
-            }
+            } */
             int closeParen = markdown.indexOf(")", openParen);
-            if(nextOpenBracket != 0 && markdown.charAt(nextOpenBracket-1) == '!') {
+            
+            if(openParen == -1 || nextOpenBracket == -1 || nextCloseBracket == -1 || closeParen == -1) {
+	    	break;
+	    }
+		    
+		if(nextOpenBracket != 0 && markdown.charAt(nextOpenBracket-1) == '!') {
                 currentIndex = closeParen + 1;
                 continue;
-            }
+           }
             if(openParen - nextCloseBracket != 1) {
                 currentIndex = closeParen + 1;
                 continue;
